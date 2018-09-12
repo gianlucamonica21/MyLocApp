@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".activities.activities.MainActivity">
+
+    <Switch
+        android:id="@+id/switch1"
+        android:layout_width="277dp"
+        android:layout_height="118dp"
+        android:layout_marginBottom="305dp"
+        android:layout_marginEnd="18dp"
+        android:layout_marginStart="25dp"
+        android:layout_marginTop="86dp"
+        android:text="Do you want to use MyLocManager?"
+        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+        android:textOff="B"
+        android:textOn="A"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/button"
+        android:layout_width="246dp"
+        android:layout_height="130dp"
+        android:layout_marginBottom="125dp"
+        android:layout_marginEnd="37dp"
+        android:layout_marginStart="37dp"
+        android:layout_marginTop="50dp"
+        android:background="#88e1bf"
+        android:onClick="openActivity"
+        android:text="Start localization"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/switch1" />
+</android.support.constraint.ConstraintLayout>
