@@ -3,6 +3,7 @@ package com.example.gianlucamonica.mylocapp.activities.activities.outdoorMyLoc.f
 import android.content.Intent;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 
 import com.example.gianlucamonica.mylocapp.R;
@@ -14,7 +15,7 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
-public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
+public class MapsActivity extends AppCompatActivity implements OnMapReadyCallback {
 
     private GoogleMap mMap;
     private Double lat;
@@ -50,7 +51,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         lng = (Double) intent.getSerializableExtra(OutdoorMyLocActivity.EXTRA_LNG);
 
         Log.i("onMapReady", lat.toString() + " " + lng.toString());
-        // Add a marker in Sydney and move the camera
+        // Add a marker and move the camera
         if(lat !=null && lng != null) {
             LatLng myLoc = new LatLng(lng, lat);
             mMap.addMarker(new MarkerOptions().position(myLoc).title("You are here"));

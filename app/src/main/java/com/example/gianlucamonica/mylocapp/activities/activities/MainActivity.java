@@ -22,7 +22,7 @@ public class MainActivity extends AppCompatActivity {
         // initiate a Switch
         simpleSwitch = (Switch) findViewById(R.id.switch1);
 
-        }
+    }
 
     void openActivity(View view){
         // check current state of a Switch (true or false).

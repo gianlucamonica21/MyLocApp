@@ -14,7 +14,7 @@ import com.example.gianlucamonica.mylocapp.activities.myLocationManager.utils.My
 public class IndoorChoiceActivity extends AppCompatActivity {
 
     private RadioGroup radioGroup;
-    private AlgorithmName algoName;
+    private AlgorithmName algoName ;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,6 +31,10 @@ public class IndoorChoiceActivity extends AppCompatActivity {
                 onRadioButtonClicked(checkedId);
             }
         });
+
+        // default algorithm
+        algoName = AlgorithmName.WIFI_RSS_FP;
+        MyApp.setChosenAlgoName(algoName);
     }
 
     public void onRadioButtonClicked(int checkedId) {
@@ -49,7 +53,9 @@ public class IndoorChoiceActivity extends AppCompatActivity {
 
     public void openActivity(View view){
 
-        Intent intent = new Intent(this, OutdoorMyLocActivity.class);
-        startActivity(intent);
+        if(algoName!=null){
+            Intent intent = new Intent(this, OutdoorMyLocActivity.class);
+            startActivity(intent);
+        }
     }
 }

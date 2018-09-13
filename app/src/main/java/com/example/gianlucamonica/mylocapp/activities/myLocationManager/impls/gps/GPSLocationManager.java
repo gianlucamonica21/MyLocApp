@@ -11,6 +11,7 @@ import android.location.Criteria;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
+import android.location.LocationProvider;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.support.annotation.Nullable;
@@ -25,6 +26,7 @@ import android.widget.Toast;
 
 import com.example.gianlucamonica.mylocapp.R;
 import com.example.gianlucamonica.mylocapp.activities.activities.indoorChoice.IndoorChoiceActivity;
+import com.example.gianlucamonica.mylocapp.activities.activities.indoorMyLoc.IndoorMyLocActivity;
 import com.example.gianlucamonica.mylocapp.activities.activities.outdoorMyLoc.OutdoorMyLocActivity;
 import com.example.gianlucamonica.mylocapp.activities.activities.outdoorMyLoc.fragments.MapsActivity;
 import com.example.gianlucamonica.mylocapp.activities.myLocationManager.locAlgInterface.LocalizationAlgorithmInterface;
@@ -225,31 +227,22 @@ public class GPSLocationManager extends Service implements LocalizationAlgorithm
         return true;
     }
 
+    /**
+     No GPS signal: indoors (or tunnel, garage)
+     hor accuracy > 20m : indoors
+     hor accuracy <= 10m:  outdoors
+     */
     @Override
     public void onLocationChanged(Location location) {
         Log.i("onLocationChanged lat", String.valueOf(location.getLatitude()));
         Log.i("onLocationChanged lng", String.valueOf(location.getLongitude()));
         Log.i("gps accuracy", String.valueOf(location.getAccuracy()));
         if(location.getAccuracy() > 10){
-           Toast.makeText(MyApp.getContext(),"You are entering a building",Toast.LENGTH_SHORT).show();
-           /*android.support.v7.app.AlertDialog.Builder al
-            ertDialog = new android.support.v7.app.AlertDialog.Builder(activity);
-            alertDialog.setTitle("You are entering a building, do you want to do indoor localization?");
-            alertDialog.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-                public void onClick(DialogInterface dialog, int which) {
-
-
-                }
-            });
-
-
-            alertDialog.setNegativeButton("No", new DialogInterface.OnClickListener() {
-                public void onClick(DialogInterface dialog, int which) {
-                    dialog.cancel();
-
-                }
-            });
-            alertDialog.show();*/
+            Toast.makeText(MyApp.getContext(),"You are entering a building",Toast.LENGTH_SHORT).show();
+            //createAndShowAlertDialog();
+            Intent i = new Intent(this.activity, IndoorMyLocActivity.class);
+            this.activity.startActivity(i);
+            stopListener();
         }else{
 
         }
@@ -261,7 +254,25 @@ public class GPSLocationManager extends Service implements LocalizationAlgorithm
 
     @Override
     public void onStatusChanged(String provider, int status, Bundle extras) {
+        //This method is called when a provider is unable to fetch a location or if the
+        // provider has recently become available after a period of unavailability.
+        boolean redirect = false;
+        switch (status){
+            case LocationProvider.OUT_OF_SERVICE:
+                redirect = true;
+                break;
+            case LocationProvider.TEMPORARILY_UNAVAILABLE:
+                redirect = true;
+                break;
+        }
 
+        if(redirect){
+            Toast.makeText(MyApp.getContext(),"You are entering a building",Toast.LENGTH_SHORT).show();
+            //createAndShowAlertDialog();
+            Intent i = new Intent(this.activity, IndoorMyLocActivity.class);
+            this.activity.startActivity(i);
+            stopListener();
+        }
     }
 
     @Override
@@ -273,4 +284,5 @@ public class GPSLocationManager extends Service implements LocalizationAlgorithm
     public void onProviderDisabled(String provider) {
 
     }
+
 }
