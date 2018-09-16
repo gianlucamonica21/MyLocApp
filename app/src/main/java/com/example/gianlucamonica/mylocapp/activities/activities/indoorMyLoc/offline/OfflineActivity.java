@@ -38,7 +38,6 @@ public class OfflineActivity extends AppCompatActivity {
 
         // setting redo scan button
         Button button = (Button) findViewById(R.id.button7);
-        //mLinearLayout.addView(button);
 
         button.setOnClickListener(new View.OnClickListener() {
 

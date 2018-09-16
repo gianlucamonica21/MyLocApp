@@ -8,6 +8,7 @@ import android.widget.Toast;
 
 import com.example.gianlucamonica.mylocapp.R;
 import com.example.gianlucamonica.mylocapp.activities.myLocationManager.MyLocationManager;
+import com.example.gianlucamonica.mylocapp.activities.myLocationManager.impls.magnetic.db.magneticFingerPrint.MagneticFingerPrint;
 import com.example.gianlucamonica.mylocapp.activities.myLocationManager.impls.wifi.db.fingerPrint.WifiFingerPrint;
 import com.example.gianlucamonica.mylocapp.activities.myLocationManager.utils.MyApp;
 import com.example.gianlucamonica.mylocapp.activities.myLocationManager.utils.map.MapView;
@@ -24,14 +25,34 @@ public class OnlineActivity extends AppCompatActivity {
     }
 
     public void locate(View view){
-        WifiFingerPrint computedLocation = myLocationManager.locate();
-        if(computedLocation != null){
-            Toast.makeText(this,"your position: " + computedLocation.toString(),Toast.LENGTH_SHORT).show();
-            final ViewGroup mLinearLayout = (ViewGroup) findViewById(R.id.constraintLayout);
 
-            // setting the map view
-            MapView mapView = new MapView(this,computedLocation.getGridName());
-            mLinearLayout.addView(mapView);
+        switch (MyApp.getChosenAlgoName()){
+            case MAGNETIC_FP:
+                MagneticFingerPrint MagnComputedLocation = myLocationManager.locate();
+
+                if(MagnComputedLocation != null){
+                    Toast.makeText(this,"your position: " + MagnComputedLocation.toString(),Toast.LENGTH_SHORT).show();
+                    final ViewGroup mLinearLayout = (ViewGroup) findViewById(R.id.constraintLayout);
+
+                    // setting the map view
+                    MapView mapView = new MapView(this,MagnComputedLocation.getGridName());
+                    mLinearLayout.addView(mapView);
+                }
+                break;
+            case WIFI_RSS_FP:
+                WifiFingerPrint WifiComputedLocation = myLocationManager.locate();
+
+                if(WifiComputedLocation != null){
+                    Toast.makeText(this,"your position: " + WifiComputedLocation.toString(),Toast.LENGTH_SHORT).show();
+                    final ViewGroup mLinearLayout = (ViewGroup) findViewById(R.id.constraintLayout);
+
+                    // setting the map view
+                    MapView mapView = new MapView(this,WifiComputedLocation.getGridName());
+                    mLinearLayout.addView(mapView);
+                }
+
+                break;
         }
+
     }
 }
