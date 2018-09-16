@@ -46,6 +46,7 @@ public class IndoorMyLocActivity extends AppCompatActivity {
         Toast.makeText(this,"instantiating " +  String.valueOf(chosenAlgoName),Toast.LENGTH_SHORT).show();
         myLocationManager = new MyLocationManager(chosenAlgoName,this);
         MyApp.setMyLocationManagerInstance(myLocationManager);
+
         // build activity layout according to chosenAlgoName
         buildUI();
         createAndShowAlertDialog();
